@@ -16,7 +16,10 @@ namespace banco
         {
             if (numero < 1000)
             {
-                throw new Exception("Número inválido");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Número inválido.");
+                Console.ResetColor();
+                throw new Exception();
             }
             this.numero = numero;
         }
@@ -63,11 +66,17 @@ namespace banco
             double valorComTaxa = valor * 1.01; // adiciona 1% de taxa
             if (valorComTaxa <= 0)
             {
-                throw new Exception("Valor inválido");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Valor inválido.");
+                Console.ResetColor();
+                throw new Exception();
             }
             if (valorComTaxa > this.saldo)
             {
-                throw new Exception("Saldo insuficiente");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Saldo insuficiente.");
+                Console.ResetColor();
+                throw new Exception();
             }
             this.saldo -= valorComTaxa;
             // implementação do saque em conta corrente
@@ -90,7 +99,10 @@ namespace banco
         {
             if (valor <= 0)
             {
-                throw new Exception("Valor inválido");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Valor inválido.");
+                Console.ResetColor();
+                throw new Exception();
             }
             this.saldo += valor; // sem taxa
         }
@@ -100,11 +112,17 @@ namespace banco
             double valorComTaxa = valor * 1.005; // adiciona 0,5% de taxa
             if (valorComTaxa <= 0)
             {
-                throw new Exception("Valor inválido");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Valor inválido.");
+                Console.ResetColor();
+                throw new Exception();
             }
             if (valorComTaxa > this.saldo)
             {
-                throw new Exception("Saldo insuficiente");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Saldo insuficiente.");
+                Console.ResetColor();
+                throw new Exception();
             }
             this.saldo -= valorComTaxa;
             // implementação do saque em conta poupança
@@ -136,7 +154,9 @@ namespace banco
                 Console.Write("Opção: ");
                 while (!int.TryParse(Console.ReadLine(), out opcao))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("Opção inválida\nOpção: ");
+                    Console.ResetColor();
                 }
 
                 try
@@ -177,13 +197,19 @@ namespace banco
 
                                 if (conta == null)
                                 {
-                                    throw new Exception("Conta não encontrada.");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Conta não encontrada.");
+                                    Console.ResetColor();
+                                    throw new Exception();
+                                    
                                 }
                                 Console.WriteLine("Quanto deseja depositar?");
                                 double valordeposito;
                                 while (!double.TryParse(Console.ReadLine(), out valordeposito)) ;
                                 conta.depositar(valordeposito);
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Depósito realizado com suceso!");
+                                Console.ResetColor();
                             }
                             break;
                         case 5:
@@ -199,13 +225,19 @@ namespace banco
 
                                 if (conta == null)
                                 {
-                                    throw new Exception("Conta não encontrada.");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Conta não encontrada.");
+                                    Console.ResetColor();
+                                    throw new Exception();
+                                    
                                 }
                                 Console.WriteLine("Quanto deseja sacar?");
                                 double valorsaque;
                                 while (!double.TryParse(Console.ReadLine(), out valorsaque)) ;
                                 conta.sacar(valorsaque);
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Saque realizado com suceso!");
+                                Console.ResetColor();
                             }
                             break;
                         case 6:
@@ -215,14 +247,19 @@ namespace banco
                                 int numeroOrigem;
                                 while (!int.TryParse(Console.ReadLine(), out numeroOrigem))
                                 {
-                                    Console.WriteLine("Informe o número da conta de origem:");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Digite um número válido.");
+                                    Console.ResetColor();
                                 }
 
                                 Conta contaOrigem = contas.Find(c => c.getNumero() == numeroOrigem);
 
                                 if (contaOrigem == null)
                                 {
-                                    throw new Exception("Conta não encontrada.");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Conta não encontrada.");
+                                    Console.ResetColor();
+                                    throw new Exception();
                                 }
 
                                 // Conta destino
@@ -237,15 +274,20 @@ namespace banco
 
                                 if (contaDestino == null)
                                 {
-                                    throw new Exception("Conta não encontrada.");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Conta não encontrada.");
+                                    Console.ResetColor();
+                                    throw new Exception();
                                 }
 
-                                Console.WriteLine($"Quanto deseja transferir?");
+                                Console.WriteLine("Quanto deseja transferir?");
                                 int valorTransferencia;
                                 while (!int.TryParse(Console.ReadLine(), out valorTransferencia));
                                 contaOrigem.sacar(valorTransferencia);
                                 contaDestino.depositar(valorTransferencia);
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Transferência realizada com suceso!");
+                                Console.ResetColor();
                             }
                             break;
                         case 7:
@@ -257,7 +299,9 @@ namespace banco
                             break;
                         default:
                             {
+                                Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Opção inválida.");
+                                Console.ResetColor();
                             }
                             break;
                     }
