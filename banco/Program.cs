@@ -170,58 +170,94 @@ namespace banco
                                 int numero;
                                 while (!int.TryParse(Console.ReadLine(), out numero))
                                 {
-                                    Console.WriteLine("va");
+                                    Console.WriteLine("Informe o número da conta.");
                                 };
 
                                 Conta conta = contas.Find(c => c.getNumero() == numero);
 
                                 if (conta == null)
                                 {
-                                    throw new Exception("conta nao encontrada");
+                                    throw new Exception("Conta não encontrada.");
                                 }
-                                Console.WriteLine("Quanto deseja depositar:");
+                                Console.WriteLine("Quanto deseja depositar?");
                                 double valordeposito;
                                 while (!double.TryParse(Console.ReadLine(), out valordeposito)) ;
                                 conta.depositar(valordeposito);
-                                Console.WriteLine("deposito realizado com suceso!!!");
+                                Console.WriteLine("Depósito realizado com suceso!");
                             }
                             break;
                         case 5:
                             {
-                                Console.WriteLine("Informe o número da conta.");
+                                Console.WriteLine("Informe o número da conta:");
                                 int numero;
                                 while (!int.TryParse(Console.ReadLine(), out numero))
                                 {
-                                    Console.WriteLine("va");
+                                    Console.WriteLine("Informe o número da conta:");
                                 };
 
                                 Conta conta = contas.Find(c => c.getNumero() == numero);
 
                                 if (conta == null)
                                 {
-                                    throw new Exception("conta nao encontrada");
+                                    throw new Exception("Conta não encontrada.");
                                 }
-                                Console.WriteLine("Quanto deseja depositar:");
+                                Console.WriteLine("Quanto deseja sacar?");
                                 double valorsaque;
                                 while (!double.TryParse(Console.ReadLine(), out valorsaque)) ;
                                 conta.sacar(valorsaque);
-                                Console.WriteLine("deposito realizado com suceso!!!");
+                                Console.WriteLine("Saque realizado com suceso!");
                             }
                             break;
                         case 6:
                             {
-                                // Transferir
+                                // Conta origem
+                                Console.WriteLine("Informe o número da conta de origem:");
+                                int numeroOrigem;
+                                while (!int.TryParse(Console.ReadLine(), out numeroOrigem))
+                                {
+                                    Console.WriteLine("Informe o número da conta de origem:");
+                                }
+
+                                Conta contaOrigem = contas.Find(c => c.getNumero() == numeroOrigem);
+
+                                if (contaOrigem == null)
+                                {
+                                    throw new Exception("Conta não encontrada.");
+                                }
+
+                                // Conta destino
+                                Console.WriteLine("Informe o número da conta de destino:");
+                                int numeroDestino;
+                                while (!int.TryParse(Console.ReadLine(), out numeroDestino))
+                                {
+                                    Console.WriteLine("Informe o número da conta de destino:");
+                                }
+
+                                Conta contaDestino = contas.Find(c => c.getNumero() == numeroDestino);
+
+                                if (contaDestino == null)
+                                {
+                                    throw new Exception("Conta não encontrada.");
+                                }
+
+                                Console.WriteLine($"Quanto deseja transferir?");
+                                int valorTransferencia;
+                                while (!int.TryParse(Console.ReadLine(), out valorTransferencia));
+                                contaOrigem.sacar(valorTransferencia);
+                                contaDestino.depositar(valorTransferencia);
+                                Console.WriteLine("Transferência realizada com suceso!");
                             }
                             break;
                         case 7:
                             {
-                                // Sair do programa
+                                Console.WriteLine("Saindo do programa...");
+                                Environment.Exit(0);
                                 return;
                             }
                             break;
                         default:
                             {
-                                Console.WriteLine("Opção inválida");
+                                Console.WriteLine("Opção inválida.");
                             }
                             break;
                     }
@@ -231,8 +267,6 @@ namespace banco
                     Console.WriteLine("Erro: " + e.Message);
                     continue; // volta ao início do loop
                 }
-
-
             } while (true);
         }
     }
