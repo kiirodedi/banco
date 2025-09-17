@@ -41,6 +41,12 @@ namespace banco
         {
             return "Número: " + this.numero + " - Saldo: " + this.saldo.ToString("F2");
         }
+
+        public void Transferir(Conta destino, double valor) 
+        {
+            this.sacar(valor);
+            destino.depositar(this.saldo);
+        }
     }
 
     class ContaCorrente : Conta
@@ -55,7 +61,10 @@ namespace banco
         {
             if (valor <= 0)
             {
-                throw new Exception("Valor inválido");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Valor inválido");
+                Console.ResetColor();
+                throw new Exception();
             }
 
             this.saldo += valor * 0.99; // desconta 1% de taxa
@@ -66,7 +75,7 @@ namespace banco
             double valorComTaxa = valor * 1.01; // adiciona 1% de taxa
             if (valorComTaxa <= 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                
                 Console.WriteLine("Valor inválido.");
                 Console.ResetColor();
                 throw new Exception();
@@ -190,7 +199,7 @@ namespace banco
                                 int numero;
                                 while (!int.TryParse(Console.ReadLine(), out numero))
                                 {
-                                    Console.WriteLine("Informe o número da conta.");
+                                    Console.WriteLine("Informe um número válido.");
                                 };
 
                                 Conta conta = contas.Find(c => c.getNumero() == numero);
@@ -283,8 +292,7 @@ namespace banco
                                 Console.WriteLine("Quanto deseja transferir?");
                                 int valorTransferencia;
                                 while (!int.TryParse(Console.ReadLine(), out valorTransferencia));
-                                contaOrigem.sacar(valorTransferencia);
-                                contaDestino.depositar(valorTransferencia);
+                                contaOrigem.Transferir(contaDestino, valorTransferencia);
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("Transferência realizada com suceso!");
                                 Console.ResetColor();
